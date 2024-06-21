@@ -1,38 +1,38 @@
 package core.mate.academy.service;
 
-import core.mate.academy.impl.BulldozerProducer;
-import core.mate.academy.impl.ExcavatorProducer;
-import core.mate.academy.impl.TruckProducer;
 import core.mate.academy.model.Bulldozer;
 import core.mate.academy.model.Excavator;
 import core.mate.academy.model.Machine;
 import core.mate.academy.model.Truck;
+import core.mate.academy.service.impl.BulldozerProducer;
+import core.mate.academy.service.impl.ExcavatorProducer;
+import core.mate.academy.service.impl.TruckProducer;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * Your implementation of MachineService.
  */
-public class MachineServiceImpl<T extends Machine> implements MachineService<T> {
+public class MachineServiceImpl implements MachineService<Machine> {
     @Override
-    public List<T> getAll(Class type) {
-        MachineProducer<T> producer;
+    public List<Machine> getAll(Class<? extends Machine> type) {
+        MachineProducer<? extends Machine> producer;
         if (type == Bulldozer.class) {
-            producer = (MachineProducer<T>) new BulldozerProducer();
-            return producer.get();
+            producer = new BulldozerProducer();
+            return (List<Machine>) producer.get();
         } else if (type == Excavator.class) {
-            producer = (MachineProducer<T>) new ExcavatorProducer();
-            return producer.get();
+            producer = new ExcavatorProducer();
+            return (List<Machine>) producer.get();
         } else if (type == Truck.class) {
-            producer = (MachineProducer<T>) new TruckProducer();
-            return producer.get();
+            producer = new TruckProducer();
+            return (List<Machine>) producer.get();
         } else {
             return Collections.emptyList();
         }
     }
 
     @Override
-    public void fill(List<? super T> machines, T value) {
+    public void fill(List<? super Machine> machines, Machine value) {
         int size = machines.size();
         for (int i = 0; i < size; i++) {
             machines.set(i, value);
@@ -40,8 +40,8 @@ public class MachineServiceImpl<T extends Machine> implements MachineService<T> 
     }
 
     @Override
-    public void startWorking(List<? extends T> machines) {
-        for (T machine : machines) {
+    public void startWorking(List<? extends Machine> machines) {
+        for (Machine machine : machines) {
             machine.doWork();
         }
     }

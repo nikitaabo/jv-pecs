@@ -1,4 +1,4 @@
-package core.mate.academy.impl;
+package core.mate.academy.service.impl;
 
 import core.mate.academy.model.Excavator;
 import core.mate.academy.service.MachineProducer;
